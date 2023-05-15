@@ -4,9 +4,10 @@ from sqlalchemy.sql import func
 
 class Eleve(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(150), unique=True)
     nom = db.Column(db.String(50))
     prenom = db.Column(db.String(50))
-    email = db.Column(db.String(150), unique=True)
+    mdp = db.Column(db.String(250))
     notes = db.relationship('Note')
     
 class Professeur(db.Model, UserMixin):
