@@ -1,10 +1,13 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, request, render_template, flash
+from flask_login import login_required, current_user
+from .models import Eleve, Professeur, Note
+from . import db
 
 # création d'une intance de blueprint 
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
-def home():
+def home():        
     return render_template("home.html")
 
 @views.route('/ajouterNote')
