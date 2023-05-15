@@ -4,6 +4,17 @@
 
 
 {% block content %} 
-    <h1>Bienvenue se connecter!</h1>
 
+    <div class="container">
+        <h1>Bienvenue se connecter!</h1>
+        <form method="post">
+            <label for="email">Email</label>
+            <input type="email" name="email" placeholder="Indiquez votre adresse email">
+    
+            <label for="mdp">Mot de passe</label>
+            <input type="password" name="mdp" placeholder="Indiquez votre mot de passe">
+    
+            <button type="submit">Se connecter</button>
+        </form>
+    </div>
 {% endblock %}

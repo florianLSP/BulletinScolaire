@@ -12,7 +12,7 @@ def create_app():
     # cette ligne permet de créer l'app en lui donnant le nom "__name__"
     app = Flask(__name__)
     # Configuration d'une clé secrete qui permet de protéger les cookies et les sessions contre la falsification de requête
-    app.config['SECRET KEY'] = 'clé secrete'
+    app.config['SECRET KEY'] = '1234'
     # Configuration de l'emplacement de la bd pour l'app. Dans ce cas il s'agit d'une bd sqlite situé dans le répertoire que l'application.
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     # Initialisation de la base de données
@@ -25,4 +25,14 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     
+    from .models import Eleve, Professeur, Note
+    with app.app_context():
+        db.create_all()
+         
     return app
+
+
+def create_database(app):
+    if not path.exists('website/' + DB_NAME):
+        db.create_all(app=app)
+        print('La base données est créée')
