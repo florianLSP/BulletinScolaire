@@ -11,13 +11,16 @@
 
     <nav class="navbar">
         <ol>
-           <li><a href="">S'inscrire</a></li>
-            <li><a href="">Se connecter</a></li>
-            <li><a href="">Ajouter une note</a></li>
-            <li><a href="">Paramètres</a></li>
-            <li><a href="">Se déconnecter</a></li>
+            <li><a href="/">Accueil</a></li>
+            <li><a href="/inscription">S'inscrire</a></li>
+            <li><a href="/connexion">Se connecter</a></li>
+            <li><a href="/ajouterNote">Ajouter une note</a></li>
+            <li><a href="/parametre">Paramètres</a></li>
+            <li><a href="/deconnecter">Se déconnecter</a></li>
         </ol>
     </nav>
+
+    {% block content %} {% endblock %}
 
     
 </body>
