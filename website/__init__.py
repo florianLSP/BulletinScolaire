@@ -17,3 +17,10 @@ def create_app():
     app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_NAME}'
     # Initialisation de la base de données
     db.init_app(app)
+    
+    # Importation du blueprint views
+    from .views import views
+    # Enregistre dans app le blueprint views. Flas redirigera vers cette vue quand cet url sera rentrée.
+    app.register_blueprint(views, url_prefix='/')
+    
+    return app
