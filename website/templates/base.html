@@ -12,12 +12,26 @@
 
     <nav class="navbar">
         <ol>
-            <li><a href="/">Accueil</a></li>
+
+            {% if user.is_authenticated == False%}
             <li><a href="/inscription">S'inscrire</a></li>
             <li><a href="/connecter">Se connecter</a></li>
-            <li><a href="/ajouterNote">Ajouter une note</a></li>
-            <li><a href="/parametre">Paramètres</a></li>
-            <li><a href="/deconnecter">Se déconnecter</a></li>
+            {% endif%}
+
+            {% if user.is_authenticated and user.statut == 'professeur' %}
+                    <li><a href="/">Accueil</a></li>
+                    <li><a href="/ajouterNote">Ajouter une note</a></li>
+                    <li><a href="/parametre">Paramètres</a></li>
+                    <li><a href="/deconnecter">Se déconnecter</a></li>
+
+            {% elif user.is_authenticated and user.statut == 'eleve' %}
+                <li><a href="/">Accueil</a></li>
+                <li><a href="/parametre">Paramètres</a></li>
+                <li><a href="/deconnecter">Se déconnecter</a></li>
+
+            {% endif%}
+
+
         </ol>
     </nav>
 

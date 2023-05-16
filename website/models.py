@@ -4,6 +4,7 @@ from sqlalchemy.sql import func
 
 class Eleve(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    statut = db.Column(db.String(20))
     email = db.Column(db.String(150), unique=True)
     nom = db.Column(db.String(50))
     prenom = db.Column(db.String(50))
@@ -12,6 +13,7 @@ class Eleve(db.Model, UserMixin):
     
 class Professeur(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
+    statut = db.Column(db.String(20))
     email = db.Column(db.String(150), unique=True)
     nom = db.Column(db.String(50))
     prenom = db.Column(db.String(50))

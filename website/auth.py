@@ -34,15 +34,15 @@ def inscription():
             elif mdp1 != mdp2:
                 flash('Les mots de passe ne sont pas identiques!', category='error')
             else:
-                new_eleve = Eleve(email=email, prenom=prenom, nom=nom, mdp=mdp1)
+                new_eleve = Eleve(statut=statut, email=email, prenom=prenom, nom=nom, mdp=mdp1)
                 db.session.add(new_eleve)
                 db.session.commit()
                 login_user(new_eleve, remember=True)
                 flash(f'Inscription terminée, bienvenue {prenom}', category='success')
                 print(new_eleve)
-                return render_template("home.html")
+                return render_template("home.html", user=current_user)
         else:
-            user_professeur = Eleve.query.filter_by(email=email).first()
+            user_professeur = Professeur.query.filter_by(email=email).first()
         
             if user_professeur:
                 flash('L\'adresse mail est déjà utilisée, veuillez en renseigner une autre.', category='error')
@@ -57,16 +57,16 @@ def inscription():
             elif mdp1 != mdp2:
                 flash('Les mots de passe ne sont pas identiques!', category='error')
             else:
-                new_professeur = Professeur(email=email, prenom=prenom, nom=nom, mdp=mdp1)
-                db.session.add(new_professeur)
+                user = Professeur(statut=statut, email=email, prenom=prenom, nom=nom, mdp=mdp1)
+                db.session.add(user)
                 db.session.commit()
-                login_user(new_professeur, remember=True)
+                login_user(user, remember=True)
                 flash(f'Inscription terminée, bienvenue {prenom}', category='success')
-                print(new_professeur)
-                return render_template("home.html")
+                print(user)
+                return render_template("home.html", user=current_user)
             
     
-    return render_template("inscription.html", eleve=current_user)
+    return render_template("inscription.html", user=current_user)
 
 @auth.route('/connecter', methods=['GET', 'POST'])
 def connexion():
@@ -74,18 +74,32 @@ def connexion():
         email = request.form.get('email')
         mdp = request.form.get('mdp')
         
-        user_eleve1 = Eleve.query.filter_by(email=email).first()
+        user_eleve = Eleve.query.filter_by(email=email).first()
+        user_professeur = Professeur.query.filter_by(email=email).first()
+
     
-        if user_eleve1:
-            if user_eleve1.mdp == mdp:
+        if user_eleve:
+            if user_eleve.mdp == mdp:
+                user = user_eleve
                 flash('Succès lors de la connexion!', category='success')
                 print(f"identifiant : {email} et mdp : {mdp}")   
-                login_user(user_eleve1, remember=True)
+                login_user(user, remember=True)
                 return redirect(url_for('views.home'))
             else:
                 flash('La tentative de connexion a échoué!', category='error')
                 print('Oups ce n\'est pas bon')
-    return render_template("connecter.html", user_eleve1=current_user)
+        else: 
+            if user_professeur.mdp == mdp:
+                user = user_professeur
+                flash('Succès lors de la connexion!', category='success')
+                print(f"identifiant : {email} et mdp : {mdp}")   
+                login_user(user, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                flash('La tentative de connexion a échoué!', category='error')
+                print('Oups ce n\'est pas bon')
+            
+    return render_template("connecter.html", user=current_user)
 
 @auth.route('/deconnecter', methods = ['GET', 'POST'])
 @login_required

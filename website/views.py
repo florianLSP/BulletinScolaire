@@ -9,12 +9,12 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home():        
-    return render_template("home.html", eleve=current_user)
+    return render_template("home.html", user=current_user)
 
 @views.route('/ajouterNote')
 def ajouterNote():
-    return render_template("ajouterNote.html")
+    return render_template("ajouterNote.html", user=current_user)
 
 @views.route('/parametre')
 def parametre():
-    return render_template("parametre.html")
+    return render_template("parametre.html", user=current_user)
