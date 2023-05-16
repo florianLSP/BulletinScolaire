@@ -49,10 +49,16 @@ def connexion():
     
         if user_eleve1:
             if user_eleve1.mdp == mdp:
-                print("all good")   
+                print(f"identifiant : {email} et mdp : {mdp}")   
                 login_user(user_eleve1, remember=True)
                 return redirect(url_for('views.home'))
             else:
                 print('Oups ce n\'est pas bon')
     return render_template("connecter.html", user_eleve1=current_user)
 
+@auth.route('/deconnecter', methods = ['GET', 'POST'])
+@login_required
+def deconnecter():
+    logout_user()
+    print("vient de se déco")
+    return redirect(url_for('auth.connexion'))

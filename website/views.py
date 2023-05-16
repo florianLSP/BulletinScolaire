@@ -18,7 +18,3 @@ def ajouterNote():
 @views.route('/parametre')
 def parametre():
     return render_template("parametre.html")
-
-@views.route('/deconnecter')
-def deconnecter():
-    return render_template("home.html")
