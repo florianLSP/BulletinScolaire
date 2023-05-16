@@ -7,8 +7,9 @@ from . import db
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
+@login_required
 def home():        
-    return render_template("home.html")
+    return render_template("home.html", eleve=current_user)
 
 @views.route('/ajouterNote')
 def ajouterNote():

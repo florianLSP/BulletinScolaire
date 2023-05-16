@@ -33,14 +33,26 @@ def inscription():
             new_eleve = Eleve(email=email, prenom=prenom, nom=nom, mdp=mdp1)
             db.session.add(new_eleve)
             db.session.commit()
+            login_user(new_eleve, remember=True)
             print(new_eleve)
-            
-
             return render_template("home.html")
     
-    return render_template("inscription.html")
+    return render_template("inscription.html", eleve=current_user)
 
-@auth.route('/connexion')
+@auth.route('/connecter', methods=['GET', 'POST'])
 def connexion():
-    return render_template("connecter.html")
+    if request.method=='POST':
+        email = request.form.get('email')
+        mdp = request.form.get('mdp')
+        
+        user_eleve1 = Eleve.query.filter_by(email=email).first()
+    
+        if user_eleve1:
+            if user_eleve1.mdp == mdp:
+                print("all good")   
+                login_user(user_eleve1, remember=True)
+                return redirect(url_for('views.home'))
+            else:
+                print('Oups ce n\'est pas bon')
+    return render_template("connecter.html", user_eleve1=current_user)
 
