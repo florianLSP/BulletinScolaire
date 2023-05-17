@@ -33,8 +33,7 @@ def ajouterNote():
         print(type(eleve))
         
         user = Eleve.query.filter_by(email=eleve).first()
-        print(user)
-        
+   
         if user:
             if int(coef) == 10:
                 if int(note) > 10:
