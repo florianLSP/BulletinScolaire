@@ -9,8 +9,10 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home(): 
-    notes = Note.query.all()
-    return render_template("home.html", user=current_user, notes=notes)
+    #TODO
+    eleve = current_user
+    notes = eleve.notes
+    return render_template("home.html", user=current_user, eleve=eleve, notes=notes)
 
 @views.route('/ajouterNote', methods=['GET', 'POST'])
 @login_required
@@ -45,6 +47,18 @@ def ajouterNote():
                     db.session.commit()
                     print(new_note)
                     return redirect(url_for('views.home'))
+                
+            if int(coef) == 20:
+                if int(note) > 20:
+                    flash('La note ne peut pas être supérieur à 20', category='error')
+                elif int(note) < 0:
+                    flash('La note ne peut pas être inférieur à 0', category='error')
+                else:
+                    new_note = Note(matiere=matiere, note=note, coef=coef, eleve_id=user.id)
+                    db.session.add(new_note)
+                    db.session.commit()
+                    print(new_note)
+                    return redirect(url_for('views.home')) 
         else:
             flash('L\'email ne correspond à aucun élève!')
     return render_template("ajouterNote.html", user=current_user)

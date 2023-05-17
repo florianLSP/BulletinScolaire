@@ -3,23 +3,29 @@
 {%block title%} Accueil {% endblock %}
 
 {% block content%}
+<br>
+<div class="container">
+  <br>
+  <h1>Liste des notes de {{ eleve.prenom }} {{ eleve.nom }}</h1>
 
-    <h1>Bienvenue sur l'accueil</h1>
-    <h1>Liste des notes</h1>
-    <table>
-      <thead>
+
+  <table>
+    <thead>
         <tr>
-          <th>Matière</th>
-          <th>Note</th>
+            <th>Matière et sujet</th>
+            <th>Note</th>
         </tr>
-      </thead>
-      <tbody>
+    </thead>
+    <tbody>
         {% for note in notes %}
-          <tr>
+        <tr>
             <td>{{ note.matiere }}</td>
-            <td>{{ note.note }}/{{note.coef}}</td>
-          </tr>
+            <td>{{ note.note }}/{{ note.coef }}</td>
+        </tr>
         {% endfor %}
-      </tbody>
-    </table>
+    </tbody>
+  </table>
+
+</div>
+
 {% endblock%}

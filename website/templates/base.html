@@ -10,30 +10,36 @@
 </head>
 <body>
 
-    <nav class="navbar">
+    <div class="container">
+        <nav class="navbar">
             {% if user.is_authenticated == False%}
-            <a href="/inscription">S'inscrire</a>
-            <a href="/connecter">Se connecter</a>
+                <ul>
+                    <li><a href="/inscription" role="button">S'inscrire</a></li>
+                    <li><a href="/connecter" role="button">Se connecter</a></li>
+                </ul>
             {% endif%}
 
             {% if user.is_authenticated and user.statut == 'professeur' %}
-                    <a href="/">Accueil</a>
-                    <a href="/parametre">Paramètres</a>
-                    <a href="/deconnecter">Se déconnecter</a>
+                <ul>
+                    <li><a href="/" role="button">Accueil</a></li>
+                    <li><a href="/parametre" role="button">Paramètres</a></li>
+                    <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
+                </ul>
+
 
             {% elif user.is_authenticated and user.statut == 'eleve' %}
-                <a href="/">Accueil</a>
-                <a href="/parametre">Paramètres</a>
-                <a href="/deconnecter">Se déconnecter</a>
-                <a href="/ajouterNote">Ajouter une note</a>
+            <ul>
+                <li><a href="/" role="button">Accueil</a></li>
+                <li><a href="/parametre" role="button">Paramètres</a></li>
+                <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
+                <li><a href="/ajouterNote" role="button">Ajouter une note</a></li>
+            </ul>
+
 
 
             {% endif%}
 
-
-        </ol>
-    </nav>
-
+        </nav>
     {% with messages = get_flashed_messages(with_categories=true)%}
         {% if messages %}
             {% for category, message in messages %}
@@ -45,6 +51,13 @@
             {% endfor%}
         {% endif %}
     {% endwith %}
+
+    </div>
+
+
+
+
+
 
             
 
