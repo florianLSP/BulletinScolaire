@@ -18,7 +18,6 @@
 
             {% if user.is_authenticated and user.statut == 'professeur' %}
                     <a href="/">Accueil</a>
-                    <a href="/ajouterNote">Ajouter une note</a>
                     <a href="/parametre">Paramètres</a>
                     <a href="/deconnecter">Se déconnecter</a>
 
@@ -26,6 +25,8 @@
                 <a href="/">Accueil</a>
                 <a href="/parametre">Paramètres</a>
                 <a href="/deconnecter">Se déconnecter</a>
+                <a href="/ajouterNote">Ajouter une note</a>
+
 
             {% endif%}
 

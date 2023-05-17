@@ -52,8 +52,9 @@ def inscription():
                 flash(f'Bienvenue {prenom} {nom}, votre compte est 100% fonctionnel!', category='success')
                 return redirect(url_for('views.home'))
         
-        else:
+        elif statut == 'professeur':
             pass
+            
     
     return render_template("inscription.html", user=current_user)
 

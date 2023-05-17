@@ -6,4 +6,27 @@
 {% block content %} 
     <h1>Bienvenue sur la page ajotuer une note!</h1>
 
+    <div class="container">
+        <form method="POST">
+            <label for="matiere">Matière</label>
+            <input type="text" name="matiere" placeholder="Entrez le nom de matière" value="Anglais">
+    
+            <label for="note">note</label>
+            <input type="text" name="note" placeholder="Entrez la note" value="5">
+    
+            <div>
+                <input type="radio" name="coef" value="10">
+                <label for="dix">/10</label>
+        
+                <input type="radio" name="coef" value="20">
+                <label for="vingt">/20</label><br>
+            </div>
+
+            <label for="eleve">Eleve</label>
+            <input type="text" name="eleve" placeholder="Entrez l'adresse email de l'élève qui a eu cette note" value="eleve4@gmail.com">
+
+            <button type="submit">Valider</button>
+        </form>
+    </div>
+
 {% endblock %}

@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 
-{%block title%} Home {% endblock %}
+{%block title%} Accueil {% endblock %}
 
 {% block content%}
 
-
+    <h1>Bienvenue sur l'accueil</h1>
+    <h1>Liste des notes</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Matière</th>
+          <th>Note</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for note in notes %}
+          <tr>
+            <td>{{ note.matiere }}</td>
+            <td>{{ note.note }}/{{note.coef}}</td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
 {% endblock%}
