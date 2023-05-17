@@ -11,23 +11,21 @@
 <body>
 
     <nav class="navbar">
-        <ol>
-
             {% if user.is_authenticated == False%}
-            <li><a href="/inscription">S'inscrire</a></li>
-            <li><a href="/connecter">Se connecter</a></li>
+            <a href="/inscription">S'inscrire</a>
+            <a href="/connecter">Se connecter</a>
             {% endif%}
 
             {% if user.is_authenticated and user.statut == 'professeur' %}
-                    <li><a href="/">Accueil</a></li>
-                    <li><a href="/ajouterNote">Ajouter une note</a></li>
-                    <li><a href="/parametre">Paramètres</a></li>
-                    <li><a href="/deconnecter">Se déconnecter</a></li>
+                    <a href="/">Accueil</a>
+                    <a href="/ajouterNote">Ajouter une note</a>
+                    <a href="/parametre">Paramètres</a>
+                    <a href="/deconnecter">Se déconnecter</a>
 
             {% elif user.is_authenticated and user.statut == 'eleve' %}
-                <li><a href="/">Accueil</a></li>
-                <li><a href="/parametre">Paramètres</a></li>
-                <li><a href="/deconnecter">Se déconnecter</a></li>
+                <a href="/">Accueil</a>
+                <a href="/parametre">Paramètres</a>
+                <a href="/deconnecter">Se déconnecter</a>
 
             {% endif%}
 
