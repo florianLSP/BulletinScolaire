@@ -9,7 +9,6 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home(): 
-    #TODO
     eleve = current_user
     notes = eleve.notes
     moyenne = calculer_moyenne(eleve.id)
@@ -76,9 +75,65 @@ def ajouterNote():
             flash('L\'email ne correspond à aucun élève!')
     return render_template("ajouterNote.html", user=current_user)
 
-@views.route('/parametre')
+@views.route('/parametre', methods=['GET', 'POST'])
 def parametre():
-    return render_template("parametre.html", user=current_user)
+    # Envoyer les données pour pré remplir le formulaire paramètres
+    eleve = current_user
+    eleve_id = eleve.id
+    email = eleve.email
+    prenom = eleve.prenom
+    nom = eleve.nom
+    mdp = eleve.mdp
+    
+    if request.method == 'POST':
+        # récupération de toute les données du formulaire
+        up_email = request.form.get('email')
+        up_prenom = request.form.get('prenom')
+        up_nom = request.form.get('nom')
+        up_mdp = request.form.get('mdp1')
+        new_mdp1 = request.form.get('newMDP1')
+        new_mdp2 = request.form.get('newMDP2')
+        
+        if mdp == up_mdp:
+            if email != up_email:
+                eleve.email = up_email
+                check_email = eleve.email
+                print(check_email)
+                flash('Succès lors de la modification de l\'email!', category='success')
+            else: 
+                eleve.email = email
+
+            if prenom != up_prenom:
+                eleve.prenom = up_prenom
+                check_prenom = eleve.prenom
+                print(check_prenom)
+                flash('Succès lors de la modification du prénom!', category='success')
+            else:
+                eleve.prenom = prenom
+                    
+            if nom != up_nom:
+                eleve.nom = up_nom
+                check_nom = eleve.nom
+                print(check_nom)
+                flash('Succès lors de la modification du nom!', category='success')
+            else:
+                eleve.nom = nom
+                    
+            if mdp != new_mdp1:
+                if new_mdp1 == new_mdp2:
+                    eleve.mdp = new_mdp1
+                    check_mdp = eleve.mdp
+                    print(check_mdp)
+                    flash('Succès lors de la modification du mot de passe!', category='success')
+                else:
+                    flash('Les nouveaux mots de passe doivent être identiques!', category='error')
+                        
+            db.session.commit()
+            return redirect(url_for('views.home')) 
+        else:
+            flash('Le mot de passe est incorrect, aucune modification a été faite!', category='error')
+            
+    return render_template("parametre.html", user=current_user, email=email, prenom=prenom, nom=nom, mdp=mdp)
 
 
 def miseSur20(note, coef):

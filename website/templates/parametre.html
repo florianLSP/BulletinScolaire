@@ -5,4 +5,29 @@
 
 {% block content %} 
 
+<div class="container">
+    <h1>Paramètre du compte :</h1>
+    <form method="POST">
+        <label for="email">Email</label>
+        <input type="email" name="email" placeholder="Indiquez votre adresse email" value={{email}}>
+
+        <label for="prenom">Prénom</label>
+        <input type="text" name="prenom" placeholder="Indiquez votre prénom ?" value={{prenom}}>
+
+        <label for="nom">Nom</label>
+        <input type="text" name="nom" placeholder="Indiquez votre nom" value={{nom}}>
+
+        <label for="mdp1">Mot de passe</label>
+        <input type="password" name="mdp1" placeholder="Indiquez votre mot de passe actuel">
+
+        <label for="newMDP1">Nouveau mot de passe</label>
+        <input type="password" name="newMDP1" placeholder="Indiquez le nouveau mot de passe">
+
+        <label for="newMDP2">Confirmation du nouveau mot de passe</label>
+        <input type="password" name="newMDP2" placeholder="Confirmez le nouveau mot de passe">
+
+        <button type="submit">Modifier</button>
+    </form>
+</div>
+
 {% endblock %}
