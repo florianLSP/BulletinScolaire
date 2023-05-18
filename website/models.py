@@ -10,6 +10,7 @@ class Eleve(db.Model, UserMixin):
     prenom = db.Column(db.String(50))
     mdp = db.Column(db.String(250))
     notes = db.relationship('Note')
+
     
     
 class Professeur(db.Model, UserMixin):
@@ -28,3 +29,5 @@ class Note(db.Model):
     coef = db.Column(db.Integer)
     eleve_id = db.Column(db.Integer, db.ForeignKey('eleve.id'))
     professeur_id = db.Column(db.Integer, db.ForeignKey('professeur.id'))
+    noteFinal = db.Column(db.Float)
+    moyenne = db.Column(db.Float)

@@ -12,7 +12,8 @@ def home():
     #TODO
     eleve = current_user
     notes = eleve.notes
-    return render_template("home.html", user=current_user, eleve=eleve, notes=notes)
+    moyenne = calculer_moyenne(eleve.id)
+    return render_template("home.html", user=current_user, eleve=eleve, notes=notes, moyenne=moyenne)
 
 @views.route('/ajouterNote', methods=['GET', 'POST'])
 @login_required
@@ -33,7 +34,8 @@ def ajouterNote():
         print(type(eleve))
         
         user = Eleve.query.filter_by(email=eleve).first()
-   
+
+
         if user:
             if int(coef) == 10:
                 if int(note) > 10:
@@ -41,7 +43,13 @@ def ajouterNote():
                 elif int(note) < 0:
                     flash('La note ne peut pas être inférieur à 0', category='error')
                 else:
-                    new_note = Note(matiere=matiere, note=note, coef=coef, eleve_id=user.id)
+                    noteFinal = miseSur20(note, coef)
+                    moyenne = calculer_moyenne(user.id)
+                    print(f'la moyenne est de {moyenne}')
+                    print(type(moyenne))
+                    print(f'la note finale est : {noteFinal}')
+                    print(type(noteFinal))
+                    new_note = Note(matiere=matiere, note=note, coef=coef, eleve_id=user.id, noteFinal=noteFinal, moyenne=moyenne)
                     db.session.add(new_note)
                     db.session.commit()
                     print(new_note)
@@ -53,7 +61,13 @@ def ajouterNote():
                 elif int(note) < 0:
                     flash('La note ne peut pas être inférieur à 0', category='error')
                 else:
-                    new_note = Note(matiere=matiere, note=note, coef=coef, eleve_id=user.id)
+                    noteFinal = float(note)
+                    moyenne = calculer_moyenne(user.id)
+                    print(f'la moyenne est de {moyenne}')
+                    print(type(moyenne))
+                    print(f'la note finale est : {noteFinal}')
+                    print(type(f'le type de la note finale est : {noteFinal}'))
+                    new_note = Note(matiere=matiere, note=note, coef=coef, eleve_id=user.id, noteFinal=noteFinal, moyenne=moyenne)
                     db.session.add(new_note)
                     db.session.commit()
                     print(new_note)
@@ -65,3 +79,20 @@ def ajouterNote():
 @views.route('/parametre')
 def parametre():
     return render_template("parametre.html", user=current_user)
+
+
+def miseSur20(note, coef):
+    note_final = float(note)/float(coef)*20 
+    return float(note_final)
+
+def calculer_moyenne(eleve_id):
+    eleve = Eleve.query.filter_by(id=eleve_id).first()
+    notes_finales = Note.query.filter_by(eleve_id=eleve_id).with_entities(Note.noteFinal).all()
+    total_notes = sum(note[0] for note in notes_finales)
+    nb_notes = len(notes_finales)
+
+    if nb_notes > 0:
+        moyenne = total_notes / nb_notes
+        return (round(moyenne, 2))
+    else:
+        return None
