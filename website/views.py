@@ -2,6 +2,7 @@ from flask import Blueprint, request, redirect, render_template, url_for, flash
 from flask_login import login_required, current_user
 from .models import Eleve, Professeur, Note
 from . import db
+from .auth import auth
 
 # création d'une intance de blueprint 
 views = Blueprint('views', __name__)
@@ -9,10 +10,11 @@ views = Blueprint('views', __name__)
 @views.route('/', methods=['GET', 'POST'])
 @login_required
 def home(): 
-    eleve = current_user
+    professeur = Professeur.query.get(current_user.id)
+    eleve = Eleve.query.get(current_user.id)
     notes = eleve.notes
     moyenne = calculer_moyenne(eleve.id)
-    return render_template("home.html", user=current_user, eleve=eleve, notes=notes, moyenne=moyenne)
+    return render_template("home.html", user=current_user, professeur=professeur, eleve=eleve, notes=notes, moyenne=moyenne)
 
 @views.route('/ajouterNote', methods=['GET', 'POST'])
 @login_required
@@ -21,7 +23,7 @@ def ajouterNote():
         matiere = request.form.get('matiere')
         note = request.form.get('note')
         coef = request.form.get('coef')
-        eleve = request.form.get('eleve')
+        eleve_email = request.form.get('eleve')
         
         print(matiere)
         print(type(matiere))
@@ -29,10 +31,10 @@ def ajouterNote():
         print(type(note))
         print(coef)
         print(type(coef))
-        print(eleve)
-        print(type(eleve))
+        print(eleve_email)
+        print(type(eleve_email))
         
-        user = Eleve.query.filter_by(email=eleve).first()
+        user = Eleve.query.filter_by(email=eleve_email).first()
 
 
         if user:
@@ -52,7 +54,7 @@ def ajouterNote():
                     db.session.add(new_note)
                     db.session.commit()
                     print(new_note)
-                    return redirect(url_for('views.home'))
+                    return redirect(url_for('views.ajouterNote'))
                 
             if int(coef) == 20:
                 if int(note) > 20:
@@ -70,7 +72,7 @@ def ajouterNote():
                     db.session.add(new_note)
                     db.session.commit()
                     print(new_note)
-                    return redirect(url_for('views.home')) 
+                    return redirect(url_for('views.ajouterNote')) 
         else:
             flash('L\'email ne correspond à aucun élève!')
     return render_template("ajouterNote.html", user=current_user)

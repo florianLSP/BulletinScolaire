@@ -12,58 +12,44 @@
 
     <div class="container">
         <nav class="navbar">
-            {% if user.is_authenticated == False%}
+            {% if user.is_authenticated %}
+                {% if user.statut == 'professeur' %}
+                    <ul>
+                        <li><a href="/ajouterNote" role="button">Ajouter une note</a></li>
+                        <li><a href="/parametre" role="button">Paramètres</a></li>
+                        <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
+                    </ul>
+                {% elif user.statut == 'eleve' %}
+                    <ul>
+                        <li><a href="/" role="button">Accueil</a></li>
+                        <li><a href="/parametre" role="button">Paramètres</a></li>
+                        <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
+                    </ul>
+                {% endif %}
+            {% else %}
                 <ul>
                     <li><a href="/inscription" role="button">S'inscrire</a></li>
                     <li><a href="/connecter" role="button">Se connecter</a></li>
                 </ul>
-            {% endif%}
-
-            {% if user.is_authenticated and user.statut == 'professeur' %}
-                <ul>
-                    <li><a href="/" role="button">Accueil</a></li>
-                    <li><a href="/parametre" role="button">Paramètres</a></li>
-                    <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
-                </ul>
-
-
-            {% elif user.is_authenticated and user.statut == 'eleve' %}
-            <ul>
-                <li><a href="/" role="button">Accueil</a></li>
-                <li><a href="/parametre" role="button">Paramètres</a></li>
-                <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
-                <li><a href="/ajouterNote" role="button">Ajouter une note</a></li>
-            </ul>
-
-
-
-            {% endif%}
-
+            {% endif %}
         </nav>
-    {% with messages = get_flashed_messages(with_categories=true)%}
-        {% if messages %}
-            {% for category, message in messages %}
-                {% if category == 'error'%}
-                    {{ message }}
-                {% else %}
-                    {{ message }}
-                {% endif%}
-            {% endfor%}
-        {% endif %}
-    {% endwith %}
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    {% if category == 'error' %}
+                        {{ message }}
+                    {% else %}
+                        {{ message }}
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
 
     </div>
 
-
-
-
-
-
-            
-
-    {%block content %}
+    {% block content %}
     {% endblock %}
 
-    
 </body>
 </html>
