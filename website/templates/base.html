@@ -13,13 +13,13 @@
     <div class="container">
         <nav class="navbar">
             {% if user.is_authenticated %}
-                {% if user.statut == 'professeur' %}
+                {% if user.statut == True %}
                     <ul>
                         <li><a href="/profAccueil" role="button">Accueil</a></li>
                         <li><a href="/parametre" role="button">Paramètres</a></li>
                         <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
                     </ul>
-                {% elif user.statut == 'eleve' %}
+                {% elif user.statut == False %}
                     <ul>
                         <li><a href="/eleveAccueil" role="button">Accueil</a></li>
                         <li><a href="/parametre" role="button">Paramètres</a></li>
