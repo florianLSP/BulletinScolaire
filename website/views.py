@@ -11,6 +11,20 @@ views = Blueprint('views', __name__)
 def home(): 
     return render_template("accueil.html", user=current_user)
 
+@views.route('/eleveAccueil', methods=['GET', 'POST'])
+@login_required
+def eleveAccueil():
+    eleve = Eleve.query.get(current_user.id)
+    notes = eleve.notes
+    moyenne = calculer_moyenne(eleve.id)
+    return render_template("eleveAccueil.html", user=current_user, eleve=eleve, notes=notes, moyenne=moyenne)
+
+@views.route('/profAccueil', methods=['GET', 'POST'])
+@login_required
+def profAccueil():
+    prof = Professeur.query.get(current_user.id)
+    return render_template("profAccueil.html", user=current_user, prof=prof)
+
 @views.route('/ajouterNote', methods=['GET', 'POST'])
 @login_required
 def ajouterNote():

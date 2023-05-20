@@ -15,19 +15,20 @@
             {% if user.is_authenticated %}
                 {% if user.statut == 'professeur' %}
                     <ul>
-                        <li><a href="/ajouterNote" role="button">Ajouter une note</a></li>
+                        <li><a href="/profAccueil" role="button">Accueil</a></li>
                         <li><a href="/parametre" role="button">Paramètres</a></li>
                         <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
                     </ul>
                 {% elif user.statut == 'eleve' %}
                     <ul>
-                        <li><a href="/" role="button">Accueil</a></li>
+                        <li><a href="/eleveAccueil" role="button">Accueil</a></li>
                         <li><a href="/parametre" role="button">Paramètres</a></li>
                         <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
                     </ul>
                 {% endif %}
             {% else %}
                 <ul>
+                    <li><a href="/" role="button">Accueil</a></li>
                     <li><a href="/inscription" role="button">S'inscrire</a></li>
                     <li><a href="/connecter" role="button">Se connecter</a></li>
                 </ul>

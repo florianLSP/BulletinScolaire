@@ -91,12 +91,13 @@ def connexion():
         if user_eleve:
             if user_eleve.mdp == mdp:
                 # eleve = Eleve.query.get(current_user.id)
-                notes = user_eleve.notes
-                moyenne = calculer_moyenne(user_eleve.id)
+                # notes = user_eleve.notes
+                # moyenne = calculer_moyenne(user_eleve.id)
                 flash(f'Succès lors de la connexion! Bonjour {user_eleve.prenom} {user_eleve.nom}', category='success')
                 print(f"Eleve: {user_eleve.id}, identifiant : {email}, mdp : {mdp}, statut : {user_eleve.statut}")   
                 login_user(user_eleve, remember=True)
-                return render_template("home.html", user=current_user, user_eleve=user_eleve, moyenne=moyenne, notes=notes)
+                # return render_template("eleveAccueil.html", user=current_user, user_eleve=user_eleve, moyenne=moyenne, notes=notes)
+                return redirect(url_for('views.eleveAccueil'))
             else:
                 flash('La tentative de connexion a échoué!', category='error')
                 print('Oups ce n\'est pas bon')
@@ -106,7 +107,7 @@ def connexion():
                 flash(f'Succès lors de la connexion! Bonjour {user_professeur.prenom} {user_professeur.nom}', category='success')
                 print(f"Eleve: {user_professeur.id}, identifiant : {email}, mdp : {mdp}, statut : {user_professeur.statut}")   
                 login_user(user_professeur, remember=True)
-                return render_template("ajouterNote.html", user=current_user, user_professeur=user_professeur)
+                return redirect(url_for('views.profAccueil'))
             else:
                 flash('La tentative de connexion a échoué!', category='error')
                 print('Oups ce n\'est pas bon')   
@@ -118,7 +119,7 @@ def connexion():
 def deconnecter():
     logout_user()
     print(f"vient de se déco")
-    return redirect(url_for('auth.connexion'))
+    return redirect(url_for('views.home'))
 
 
 def calculer_moyenne(eleve_id):

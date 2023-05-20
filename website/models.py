@@ -11,8 +11,6 @@ class Eleve(db.Model, UserMixin):
     mdp = db.Column(db.String(250))
     notes = db.relationship('Note')
 
-    
-    
 class Professeur(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     statut = db.Column(db.String(20))
