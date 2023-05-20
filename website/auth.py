@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, flash, redirect, url_for
-from .models import Eleve, Professeur
+from .models import Eleve, Professeur, Note
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import login_user, login_required, logout_user, current_user
 from . import db
@@ -90,11 +90,13 @@ def connexion():
     
         if user_eleve:
             if user_eleve.mdp == mdp:
-                # user = user_eleve
+                # eleve = Eleve.query.get(current_user.id)
+                notes = user_eleve.notes
+                moyenne = calculer_moyenne(user_eleve.id)
                 flash(f'Succès lors de la connexion! Bonjour {user_eleve.prenom} {user_eleve.nom}', category='success')
                 print(f"Eleve: {user_eleve.id}, identifiant : {email}, mdp : {mdp}, statut : {user_eleve.statut}")   
                 login_user(user_eleve, remember=True)
-                return redirect(url_for('views.home'))
+                return render_template("home.html", user=current_user, user_eleve=user_eleve, moyenne=moyenne, notes=notes)
             else:
                 flash('La tentative de connexion a échoué!', category='error')
                 print('Oups ce n\'est pas bon')
@@ -104,7 +106,7 @@ def connexion():
                 flash(f'Succès lors de la connexion! Bonjour {user_professeur.prenom} {user_professeur.nom}', category='success')
                 print(f"Eleve: {user_professeur.id}, identifiant : {email}, mdp : {mdp}, statut : {user_professeur.statut}")   
                 login_user(user_professeur, remember=True)
-                return redirect(url_for('views.ajouterNote'))
+                return render_template("ajouterNote.html", user=current_user, user_professeur=user_professeur)
             else:
                 flash('La tentative de connexion a échoué!', category='error')
                 print('Oups ce n\'est pas bon')   
@@ -117,3 +119,16 @@ def deconnecter():
     logout_user()
     print(f"vient de se déco")
     return redirect(url_for('auth.connexion'))
+
+
+def calculer_moyenne(eleve_id):
+    eleve = Eleve.query.filter_by(id=eleve_id).first()
+    notes_finales = Note.query.filter_by(eleve_id=eleve_id).with_entities(Note.noteFinal).all()
+    total_notes = sum(note[0] for note in notes_finales)
+    nb_notes = len(notes_finales)
+
+    if nb_notes > 0:
+        moyenne = total_notes / nb_notes
+        return (round(moyenne, 2))
+    else:
+        return None

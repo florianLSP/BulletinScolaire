@@ -8,13 +8,8 @@ from .auth import auth
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
-@login_required
 def home(): 
-    professeur = Professeur.query.get(current_user.id)
-    eleve = Eleve.query.get(current_user.id)
-    notes = eleve.notes
-    moyenne = calculer_moyenne(eleve.id)
-    return render_template("home.html", user=current_user, professeur=professeur, eleve=eleve, notes=notes, moyenne=moyenne)
+    return render_template("accueil.html", user=current_user)
 
 @views.route('/ajouterNote', methods=['GET', 'POST'])
 @login_required
@@ -78,6 +73,7 @@ def ajouterNote():
     return render_template("ajouterNote.html", user=current_user)
 
 @views.route('/parametre', methods=['GET', 'POST'])
+@login_required
 def parametre():
     # Envoyer les données pour pré remplir le formulaire paramètres
     eleve = current_user
