@@ -18,7 +18,7 @@ def create_app():
     app.register_blueprint(views, url_prefix='/')
     app.register_blueprint(auth, url_prefix='/')
     
-    from .models import Eleve, Professeur, Note
+    from .models import Utilisateur, Note
     
     with app.app_context():
         db.create_all()
@@ -29,10 +29,6 @@ def create_app():
     
     @login_manager.user_loader
     def load_user(id):
-        return Eleve.query.get(int(id))
-    
-    @login_manager.user_loader
-    def load_user(id):
-        return Professeur.query.get(int(id))
- 
+        return Utilisateur.query.get(int(id))
+
     return app
