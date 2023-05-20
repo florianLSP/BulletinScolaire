@@ -9,13 +9,13 @@
     <h1>Paramètre du compte :</h1>
     <form method="POST">
         <label for="email">Email</label>
-        <input type="email" name="email" placeholder="Indiquez votre adresse email" value={{email}}>
+        <input type="email" name="email" placeholder="Indiquez votre adresse email" value={{user.email}}>
 
         <label for="prenom">Prénom</label>
-        <input type="text" name="prenom" placeholder="Indiquez votre prénom ?" value={{prenom}}>
+        <input type="text" name="prenom" placeholder="Indiquez votre prénom ?" value={{user.prenom}}>
 
         <label for="nom">Nom</label>
-        <input type="text" name="nom" placeholder="Indiquez votre nom" value={{nom}}>
+        <input type="text" name="nom" placeholder="Indiquez votre nom" value={{user.nom}}>
 
         <label for="mdp1">Mot de passe</label>
         <input type="password" name="mdp1" placeholder="Indiquez votre mot de passe actuel">
