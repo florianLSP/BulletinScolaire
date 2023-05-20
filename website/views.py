@@ -140,7 +140,6 @@ def parametre():
         prenom_afficher= current_user.prenom
         nom_afficher= current_user.nom
           
-
     # Mettre à jour les données qui ont changé.
     return render_template("parametre.html", user=current_user, email=email, prenom=prenom, nom=nom)
 

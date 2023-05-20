@@ -44,7 +44,7 @@ def inscription():
             elif mdp1 != mdp2:
                 flash('Les mots de passe ne sont pas identiques!', category='error')
             else :
-                new_user = Utilisateur(email=email, prenom=prenom, nom=nom, mdp=mdp1, statut=est_eleve)
+                new_user = Utilisateur(email=email, prenom=prenom.capitalize(), nom=nom.capitalize(), mdp=mdp1, statut=est_eleve)
                 db.session.add(new_user)
                 db.session.commit()
                 print(f'{new_user}, email : {email}, prenom : {prenom}, nom : {nom}, mdp : {mdp1}, statut : {statut}')
@@ -110,14 +110,3 @@ def deconnecter():
     return redirect(url_for('views.home'))
 
 
-def calculer_moyenne(eleve_id):
-    eleve = Utilisateur.query.filter_by(id=eleve_id).first()
-    notes_finales = Note.query.filter_by(eleve_id=eleve_id).with_entities(Note.noteFinal).all()
-    total_notes = sum(note[0] for note in notes_finales)
-    nb_notes = len(notes_finales)
-
-    if nb_notes > 0:
-        moyenne = total_notes / nb_notes
-        return (round(moyenne, 2))
-    else:
-        return None

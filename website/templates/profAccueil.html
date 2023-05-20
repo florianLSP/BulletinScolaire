@@ -2,18 +2,16 @@
 
 {% block title %} Ajouter une note {% endblock %}
 
-
 {% block content %} 
     
-
     <div class="container">
         <h1>Bienvenue sur la page ajotuer une note!</h1>
         <form method="POST">
             <label for="matiere">Matière et sujet de l'évalutation</label>
-            <input type="text" name="matiere" placeholder="Entrez le nom de matière" value="Anglais">
+            <input type="text" name="matiere" placeholder="Entrez le nom de matière">
     
             <label for="note">note</label>
-            <input type="text" name="note" placeholder="Entrez la note" value="5">
+            <input type="text" name="note" placeholder="Entrez la note">
     
             <div>
                 <input type="radio" name="coef" value="10">
@@ -24,8 +22,7 @@
             </div>
 
             <label for="eleve">Eleve</label>
-            <input type="text" name="eleve" placeholder="Entrez l'adresse email de l'élève qui a eu cette note" value="eleve4@gmail.com">
-
+            <input type="text" name="eleve" placeholder="Entrez l'adresse email de l'élève qui a eu cette note">
 
             <button type="submit">Valider</button>
         </form>
