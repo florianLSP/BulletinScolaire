@@ -4,9 +4,10 @@ from .models import Utilisateur, Note
 from . import db
 from .auth import auth
 
+
 views = Blueprint('views', __name__)
 
-@views.route('/', methods=['GET', 'POST'])
+@views.route('/')
 def home(): 
     return render_template("accueil.html", user=current_user)
 
@@ -22,13 +23,24 @@ def eleveAccueil():
 @login_required
 def profAccueil():
     professeur = Utilisateur.query.get(current_user.id)
+    utilisateur = Utilisateur.query.all()
     if request.method == 'POST':
         matiere = request.form.get('matiere')
         note = request.form.get('note')
         coef = request.form.get('coef')
         eleve_email = request.form.get('eleve')
         
+        print(matiere)
+        print(type(matiere))
+        print(note)
+        print(type(note))
+        print(coef)
+        print(type(coef))
+        print(eleve_email)
+        print(type(eleve_email))
+        
         user = Utilisateur.query.filter_by(email=eleve_email).first()
+
 
         if user:
             if int(coef) == 10:
@@ -68,7 +80,7 @@ def profAccueil():
                     return render_template("profAccueil.html", user=current_user)
         else:
             flash('L\'email ne correspond à aucun élève!')
-    return render_template("profAccueil.html", user=current_user, professeur=professeur)
+    return render_template("profAccueil.html", user=current_user, professeur=professeur, utilisateur=utilisateur)
 
 @views.route('/parametre', methods=['GET', 'POST'])
 @login_required
@@ -77,7 +89,7 @@ def parametre():
     prenom = current_user.prenom
     nom = current_user.nom
     mdp = current_user.mdp
-    
+
     if request.method == 'POST':
         email_form = request.form.get('email')
         prenom_form = request.form.get('prenom')

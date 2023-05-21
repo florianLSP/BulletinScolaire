@@ -20,8 +20,16 @@
                 <label for="vingt">/20</label><br>
             </div>
 
-            <label for="eleve">Eleve</label>
-            <input type="text" name="eleve" placeholder="Entrez l'adresse email de l'élève qui a eu cette note">
+            <label for="eleve">Élève</label>
+            <select name="eleve">
+                {% for eleve in utilisateur%}
+                    {%if eleve.statut == False %}
+                        <option value={{eleve.email}}>{{eleve.prenom}} {{eleve.nom}}</option>
+                    {% endif%}
+                {% endfor%}
+
+            </select>
+
 
             <button type="submit">Valider</button>
         </form>
