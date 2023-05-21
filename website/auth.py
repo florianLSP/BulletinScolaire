@@ -10,24 +10,14 @@ auth = Blueprint('auth', __name__)
 def inscription():
     
     if request.method == 'POST':
-        
-        # je récupère toutes les données du formulaire :
+
         email = request.form.get('email')
         prenom = request.form.get('prenom')
         nom = request.form.get('nom')
         mdp1 = request.form.get('mdp1')
         mdp2 = request.form.get('mdp2')
         statut = request.form.get('statut')
-        
-        #vérification de ce que j'ai récupéré : 
-        print(email)
-        print(prenom)
-        print(nom)
-        print(mdp1)
-        print(mdp2)
-        print(statut)
             
-        # en fonction du statut redirection : 
         if statut == 'False' :
             est_eleve = False
             user = Utilisateur.query.filter_by(email=email).first()
@@ -77,7 +67,7 @@ def inscription():
                 print('super l\'utilisateur à bien été ajouté.')
                 flash(f'Bienvenue {prenom} {nom}, votre compte est 100% fonctionnel!', category='success')
                 return redirect(url_for('views.profAccueil'))
-            
+        
     return render_template("inscription.html", user=current_user)
 
 @auth.route('/connecter', methods=['GET', 'POST'])

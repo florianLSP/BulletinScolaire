@@ -4,7 +4,6 @@ from .models import Utilisateur, Note
 from . import db
 from .auth import auth
 
-# création d'une intance de blueprint 
 views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
@@ -19,12 +18,6 @@ def eleveAccueil():
     moyenne = calculer_moyenne(int(eleve.id))
     return render_template("eleveAccueil.html", user=current_user, eleve=eleve, notes=notes, moyenne=moyenne)
 
-# @views.route('/profAccueil', methods=['GET', 'POST'])
-# @login_required
-# def profAccueil():
-#     professeur = Utilisateur.query.get(current_user.id)
-#     return render_template("profAccueil.html", user=current_user, professeur=professeur)
-
 @views.route('/profAccueil', methods=['GET', 'POST'])
 @login_required
 def profAccueil():
@@ -35,17 +28,7 @@ def profAccueil():
         coef = request.form.get('coef')
         eleve_email = request.form.get('eleve')
         
-        print(matiere)
-        print(type(matiere))
-        print(note)
-        print(type(note))
-        print(coef)
-        print(type(coef))
-        print(eleve_email)
-        print(type(eleve_email))
-        
         user = Utilisateur.query.filter_by(email=eleve_email).first()
-
 
         if user:
             if int(coef) == 10:
@@ -64,7 +47,6 @@ def profAccueil():
                     db.session.add(new_note)
                     db.session.commit()
                     print(new_note)
-                    # return redirect(url_for('views.profAccueil'))
                     return render_template("profAccueil.html", user=current_user)
                 
             if int(coef) == 20:
@@ -83,7 +65,6 @@ def profAccueil():
                     db.session.add(new_note)
                     db.session.commit()
                     print(new_note)
-                    # return redirect(url_for('views.ajouterNote')) 
                     return render_template("profAccueil.html", user=current_user)
         else:
             flash('L\'email ne correspond à aucun élève!')
@@ -92,15 +73,12 @@ def profAccueil():
 @views.route('/parametre', methods=['GET', 'POST'])
 @login_required
 def parametre():
-    # Afficher les données de l'utilisateur dans le formulaire.
     email = current_user.email
     prenom = current_user.prenom
     nom = current_user.nom
     mdp = current_user.mdp
     
-    # Récupérer les données du formulaire.
     if request.method == 'POST':
- 
         email_form = request.form.get('email')
         prenom_form = request.form.get('prenom')
         nom_form = request.form.get('nom')
@@ -140,7 +118,6 @@ def parametre():
         prenom_afficher= current_user.prenom
         nom_afficher= current_user.nom
           
-    # Mettre à jour les données qui ont changé.
     return render_template("parametre.html", user=current_user, email=email, prenom=prenom, nom=nom)
 
 
