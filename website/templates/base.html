@@ -4,36 +4,35 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel=stylesheet href="style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@1/css/pico.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/style.css" />
     <title>{%block title%}{%endblock%}</title>
 </head>
 <body>
-
-    <div class="container">
-        <nav class="navbar">
-            {% if user.is_authenticated %}
-                {% if user.statut == True %}
-                    <ul>
-                        <li><a href="/profAccueil" role="button">Accueil</a></li>
-                        <li><a href="/parametre" role="button">Paramètres</a></li>
-                        <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
-                    </ul>
-                {% elif user.statut == False %}
-                    <ul>
-                        <li><a href="/eleveAccueil" role="button">Accueil</a></li>
-                        <li><a href="/parametre" role="button">Paramètres</a></li>
-                        <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
-                    </ul>
-                {% endif %}
-            {% else %}
+<div class="container">
+    <nav class="navbar">
+        {% if user.is_authenticated %}
+            {% if user.statut == True %}
                 <ul>
-                    <li><a href="/" role="button">Accueil</a></li>
-                    <li><a href="/inscription" role="button">S'inscrire</a></li>
-                    <li><a href="/connecter" role="button">Se connecter</a></li>
+                    <li><a href="/profAccueil" role="button">Accueil</a></li>
+                    <li><a href="/parametre" role="button">Paramètres</a></li>
+                    <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
+                </ul>
+            {% elif user.statut == False %}
+                <ul>
+                    <li><a href="/eleveAccueil" role="button">Accueil</a></li>
+                    <li><a href="/parametre" role="button">Paramètres</a></li>
+                    <li><a href="/deconnecter" role="button">Se déconnecter</a></li>
                 </ul>
             {% endif %}
-        </nav>
+        
+        {% else %}
+            <ul>
+                <li><a href="/" role="button">Accueil</a></li>
+                <li><a href="/inscription" role="button">S'inscrire</a></li>
+                <li><a href="/connecter" role="button">Se connecter</a></li>
+            </ul>
+        {% endif %}
+    </nav>
 
         {% with messages = get_flashed_messages(with_categories=true) %}
             {% if messages %}
@@ -47,9 +46,11 @@
             {% endif %}
         {% endwith %}
 
-    </div>
     {% block content %}
     {% endblock %}
 
+</div>
+
+       
 </body>
 </html>
