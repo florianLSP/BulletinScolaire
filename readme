@@ -1,1 +1,11 @@
-à compléter
+Application web : 
+
+    Création d'un élève ou d'un professeur.
+    Un élève aura la possibilité de d'accéder à ses notes, de changer les paramètres d'inscription
+        et de se déconnecter.
+    Un professeur pour lui ajouter des notes à un élève, changer ses paramètres et se déconnecter.
+
+    Ce projet n'est pas axé sur la sécurité, aucun des mdp est cryptés. Les mesures de sécurités sont celles
+        que flask met à disposition automatique dans chaque projet.
+
+    La partie front du projet a été faite grâce à picoCSS qui s'occupe de faire la mise en page et le style automatiquement.
